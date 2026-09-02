@@ -1,0 +1,745 @@
+/* ============================================================================
+   NASA RAVEN AERODYNAMICS PROJECT — SITE STYLESHEET
+   ============================================================================
+   This is the ONE file that controls the look of every page on the site.
+   Every HTML page (index.html, raven.html, project.html, approach.html,
+   findings.html, future.html, sources.html) links to this same file, so a
+   change made here shows up everywhere automatically.
+
+   HOW THIS FILE IS ORGANIZED (search for these ALL-CAPS headers):
+     1. COLOR PALETTE (CSS VARIABLES)  <- change site-wide colors here
+     2. RESET & BASE STYLES
+     3. LAYOUT HELPERS (containers, spacing)
+     4. SITE HEADER + OPTIONS MENU
+     5. BUTTONS
+     6. HERO SECTION (big banner, used on the Home page)
+     7. PAGE BANNER (smaller banner, used on inner pages)
+     8. CONTENT SECTIONS (text blocks, lists)
+     9. CARDS (used for the "More About the Project" hub links)
+     10. FIGURE / IMAGE PLACEHOLDERS
+     11. TABLES (timeline / sources)
+     12. SITE FOOTER
+     13. RESPONSIVE ADJUSTMENTS (small screens)
+   ============================================================================ */
+
+
+/* ============================================================================
+   1. COLOR PALETTE (CSS VARIABLES)
+   ============================================================================
+   These variables come directly from the official MSState color palette PDF.
+   Maroon is the PRIMARY color and is used for the header, buttons, headings,
+   and every other dominant element on the site, per MSU brand guidelines
+   ("Maroon should always be the dominant color in university publications").
+
+   The accent colors are used only in small doses (icons, highlight borders,
+   hover states) and are always paired with maroon nearby, exactly as the
+   brand guide instructs.
+
+   TO RETHEME THE WHOLE SITE: change the values below. You do not need to
+   edit any other file or any individual page.
+   ========================================================================= */
+:root {
+  /* --- MSState primary colors -------------------------------------------- */
+  --color-maroon: #5D1725;        /* MSSTATE MAROON — PMS 505 */
+  --color-maroon-dark: #451016;   /* A hand-picked darker maroon for hover/active states */
+  --color-light-grey: #C1C6C8;    /* MSSTATE LIGHT GREY — PMS 428 */
+  --color-dark-grey: #777777;     /* MSSTATE DARK GREY — PMS Cool Grey 9 */
+
+  /* --- MSState accent colors (use sparingly, always next to maroon) ------ */
+  --color-accent-khaki: #A69F88;      /* PMS 7536 */
+  --color-accent-rust: #A9431E;       /* PMS 1675 */
+  --color-accent-teal: #00A3AD;       /* PMS 7467 */
+  --color-accent-purple: #642F6C;     /* PMS 520 */
+  --color-accent-olive: #8F993E;      /* PMS 7495 */
+  --color-accent-brown: #6E4C1E;      /* PMS 1405 */
+  --color-accent-tan: #DAC79D;        /* PMS 7501 */
+  --color-accent-gold: #FFB81C;       /* PMS 1235 */
+  --color-accent-darkgold: #C99700;   /* PMS 117 */
+  --color-accent-yellowgreen: #B7BF10;/* PMS 583 */
+
+  /* --- Semantic aliases: the names actually used throughout this file ---- */
+  /* Changing these two lines changes the "brand color" of the whole site.  */
+  --color-primary: var(--color-maroon);
+  --color-primary-hover: var(--color-maroon-dark);
+
+  /* The single accent color used for buttons/highlights on light content.  */
+  /* Swap this for any --color-accent-* above if you want a different look. */
+  --color-accent: var(--color-accent-gold);
+  --color-accent-hover: var(--color-accent-darkgold);
+
+  /* Neutral tones used for backgrounds and text (kept off pure black/white
+     to stay consistent with the grey tones in the official palette). */
+  --color-bg: #FFFFFF;
+  --color-bg-alt: #F6F5F3;   /* very light neutral for alternating sections */
+  --color-text: #262223;
+  --color-text-muted: var(--color-dark-grey);
+  --color-border: var(--color-light-grey);
+
+  /* Spacing + shape tokens used across the site for consistency */
+  --radius: 10px;
+  --shadow-soft: 0 2px 10px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 6px 20px rgba(0, 0, 0, 0.12);
+  --max-width: 1100px;
+}
+
+
+/* ============================================================================
+   2. RESET & BASE STYLES
+   ============================================================================ */
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  color: var(--color-primary);
+  line-height: 1.25;
+  margin-top: 0;
+}
+
+h1 { font-size: clamp(1.9rem, 4vw, 2.75rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h3 { font-size: 1.25rem; }
+
+p {
+  margin: 0 0 1rem 0;
+}
+
+a {
+  color: var(--color-primary);
+}
+
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+ul, ol {
+  margin: 0 0 1rem 0;
+  padding-left: 1.4rem;
+}
+
+li {
+  margin-bottom: 0.4rem;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Visible focus outline everywhere, for keyboard and accessibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+
+/* ============================================================================
+   3. LAYOUT HELPERS
+   ============================================================================ */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.section {
+  padding: 3rem 0;
+}
+
+.section--alt {
+  background-color: var(--color-bg-alt);
+}
+
+.text-center {
+  text-align: center;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+
+/* ============================================================================
+   4. SITE HEADER + OPTIONS MENU
+   ============================================================================
+   NOTE: The actual header content (site title + Options button + dropdown
+   list of pages) is generated by js/main.js from ONE list of pages, and
+   dropped into the empty <header id="site-header"></header> element that
+   sits at the top of every page. See js/main.js if you want to add or
+   rename a page in the menu — you only have to edit it in that one file.
+   ========================================================================= */
+#site-header {
+  background-color: var(--color-primary);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-soft);
+}
+
+.site-header__bar {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0.85rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.site-header__brand {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.02em;
+}
+
+.site-header__brand:hover {
+  color: var(--color-accent);
+}
+
+.site-header__brand-mark {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+  flex-shrink: 0;
+}
+
+/* --- Options button (top-right on every page) -------------------------- */
+.options {
+  position: relative;
+}
+
+.options__button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  padding: 0.5rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.options__button:hover,
+.options__button[aria-expanded="true"] {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-color: var(--color-accent);
+}
+
+.options__caret {
+  transition: transform 0.15s ease;
+}
+
+.options__button[aria-expanded="true"] .options__caret {
+  transform: rotate(180deg);
+}
+
+.options__menu {
+  position: absolute;
+  top: calc(100% + 0.5rem);
+  right: 0;
+  min-width: 240px;
+  background-color: #fff;
+  color: var(--color-text);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-medium);
+  padding: 0.5rem;
+  list-style: none;
+  margin: 0;
+}
+
+.options__menu[hidden] {
+  display: none;
+}
+
+.options__menu li + li {
+  margin-top: 2px;
+}
+
+.options__menu a {
+  display: block;
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
+  text-decoration: none;
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+.options__menu a:hover,
+.options__menu a:focus-visible {
+  background-color: var(--color-bg-alt);
+  color: var(--color-primary);
+}
+
+.options__menu a[aria-current="page"] {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.options__menu a[aria-current="page"]:hover {
+  background-color: var(--color-primary-hover);
+}
+
+
+/* ============================================================================
+   5. BUTTONS
+   ============================================================================
+   Use these classes on <a> or <button> elements. ".btn" is the base class;
+   add ONE modifier class for the color style you want.
+   ========================================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  font-size: 1rem;
+  font-weight: 700;
+  text-decoration: none;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background-color 0.12s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-soft);
+}
+
+/* Primary = solid maroon. Use for the most important action on a page. */
+.btn--primary {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background-color: var(--color-primary-hover);
+  border-color: var(--color-primary-hover);
+  color: #fff;
+}
+
+/* Outline = maroon border, transparent fill. Use for secondary actions,
+   or on top of the dark hero banner. */
+.btn--outline {
+  background-color: transparent;
+  border-color: currentColor;
+  color: var(--color-primary);
+}
+
+.btn--outline:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+/* Use on the dark maroon hero background so text stays readable. */
+.btn--outline-light {
+  background-color: transparent;
+  border-color: #fff;
+  color: #fff;
+}
+
+.btn--outline-light:hover {
+  background-color: #fff;
+  color: var(--color-primary);
+}
+
+/* Accent = gold. Use very sparingly for a single "pop" call-to-action. */
+.btn--accent {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+  color: var(--color-maroon-dark);
+}
+
+.btn--accent:hover {
+  background-color: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+}
+
+.btn-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+
+/* ============================================================================
+   6. HERO SECTION (big banner — used at the top of index.html)
+   ============================================================================ */
+.hero {
+  background-color: var(--color-primary);
+  background-image: linear-gradient(135deg, var(--color-maroon) 0%, var(--color-maroon-dark) 100%);
+  color: #fff;
+  padding: 4.5rem 0 3.5rem;
+}
+
+.hero h1 {
+  color: #fff;
+  margin-bottom: 0.75rem;
+}
+
+.hero__subtitle {
+  font-size: 1.15rem;
+  color: rgba(255, 255, 255, 0.88);
+  margin-bottom: 0.5rem;
+}
+
+.hero__meta {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.95rem;
+  margin-bottom: 2rem;
+}
+
+.hero__logo-slot {
+  margin-bottom: 1.5rem;
+}
+
+
+/* ============================================================================
+   7. PAGE BANNER (smaller banner — used at the top of inner pages)
+   ============================================================================ */
+.page-banner {
+  background-color: var(--color-primary);
+  color: #fff;
+  padding: 2.75rem 0;
+}
+
+.page-banner h1 {
+  color: #fff;
+  margin-bottom: 0.4rem;
+}
+
+.page-banner__subtitle {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 1.05rem;
+  max-width: 65ch;
+}
+
+/* Thin gold accent rule under page banners — a small, brand-approved touch
+   of accent color paired directly with maroon. */
+.page-banner__accent-bar {
+  height: 5px;
+  background-color: var(--color-accent);
+}
+
+
+/* ============================================================================
+   8. CONTENT SECTIONS
+   ============================================================================ */
+.content h2 {
+  border-bottom: 3px solid var(--color-accent);
+  padding-bottom: 0.4rem;
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.content h3 {
+  color: var(--color-maroon-dark);
+  margin-bottom: 0.5rem;
+}
+
+.callout {
+  background-color: var(--color-bg-alt);
+  border-left: 5px solid var(--color-primary);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.callout--todo {
+  border-left-color: var(--color-accent-darkgold);
+  background-color: #FFF8E8;
+}
+
+.callout--todo strong {
+  color: var(--color-accent-darkgold);
+}
+
+.tag {
+  display: inline-block;
+  background-color: var(--color-accent-teal);
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.25rem 0.6rem;
+  border-radius: 999px;
+  margin-bottom: 0.75rem;
+}
+
+
+/* ============================================================================
+   9. CARDS (used on the "More About the Project" hub page)
+   ============================================================================ */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: 1px solid var(--color-border);
+  border-top: 5px solid var(--color-primary);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  text-decoration: none;
+  color: var(--color-text);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
+}
+
+.card h3 {
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.card p {
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+.card__cta {
+  font-weight: 700;
+  color: var(--color-accent-darkgold);
+}
+
+.card:hover .card__cta {
+  color: var(--color-accent);
+}
+
+/* Two large "hub" cards on the home page (RAVEN / Project) */
+.hub-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.hub-card {
+  display: block;
+  background-color: #fff;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  text-decoration: none;
+  color: var(--color-text);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+}
+
+.hub-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--color-primary);
+}
+
+.hub-card h2 {
+  border-bottom: none;
+  color: var(--color-primary);
+  margin-bottom: 0.6rem;
+}
+
+.hub-card p {
+  color: var(--color-text-muted);
+}
+
+.hub-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  margin-top: 0.75rem;
+}
+
+
+/* ============================================================================
+   10. FIGURE / IMAGE PLACEHOLDERS
+   ============================================================================
+   These dashed boxes mark exactly where a photo, diagram, or chart should
+   go. See images/README.md and the HTML comments above each placeholder in
+   every page for the exact code to paste in to replace them with a real
+   <img>. Once you add your image and delete the placeholder div, none of
+   these placeholder styles apply to your real image.
+   ========================================================================= */
+.figure-placeholder {
+  border: 3px dashed var(--color-accent-khaki);
+  background-color: var(--color-bg-alt);
+  border-radius: var(--radius);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  margin: 1.5rem 0;
+}
+
+.figure-placeholder__label {
+  display: inline-block;
+  font-weight: 700;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  border-radius: 999px;
+  padding: 0.3rem 0.9rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.figure-placeholder p {
+  margin: 0.25rem 0;
+}
+
+.figure-placeholder__hint {
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* Styling applied automatically once you insert a real <figure><img></figure> */
+.figure {
+  margin: 1.5rem 0;
+  text-align: center;
+}
+
+.figure img {
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-soft);
+  margin: 0 auto;
+}
+
+.figure figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.figure-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  align-items: start;
+}
+
+
+/* ============================================================================
+   11. TABLES (timeline / sources / references)
+   ============================================================================ */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  box-shadow: var(--shadow-soft);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+th {
+  background-color: var(--color-primary);
+  color: #fff;
+  font-weight: 700;
+}
+
+tr:nth-child(even) td {
+  background-color: var(--color-bg-alt);
+}
+
+
+/* ============================================================================
+   12. SITE FOOTER
+   ============================================================================
+   Like the header, the footer's content is generated by js/main.js so it
+   stays identical on every page automatically.
+   ========================================================================= */
+#site-footer {
+  background-color: var(--color-maroon-dark);
+  color: rgba(255, 255, 255, 0.85);
+  margin-top: 3rem;
+}
+
+.site-footer__bar {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 1rem;
+  font-size: 0.9rem;
+}
+
+.site-footer__bar a {
+  color: var(--color-accent);
+  text-decoration: none;
+}
+
+.site-footer__bar a:hover {
+  text-decoration: underline;
+}
+
+
+/* ============================================================================
+   13. RESPONSIVE ADJUSTMENTS
+   ============================================================================ */
+@media (max-width: 640px) {
+  .site-header__brand span.site-header__brand-text {
+    display: none; /* keep just the mark + "Menu" button on very small screens */
+  }
+
+  .hero {
+    padding: 3rem 0 2.5rem;
+  }
+
+  .section {
+    padding: 2rem 0;
+  }
+
+  .btn-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<!-- ============================================================================
+     HOME PAGE (index.html)
+     ============================================================================
+     This is the site's landing page. It pulls its content from Slides 1-2 of
+     the project proposal presentation:
+       - Slide 1: project title, team members, course/date info
+       - Slide 2: the "Proposed Problem Statement"
+
+     From here, visitors click one of the two big buttons near the bottom to
+     go to "Learn About the RAVEN" or "More About the Project".
+
+     Every page on the site shares the same <head> setup (links to
+     css/style.css and js/main.js) and the same empty
+     <header id="site-header"> / <footer id="site-footer"> pair, which
+     js/main.js automatically fills in with the navigation menu. See
+     js/main.js if you want to add, rename, or remove a page anywhere on
+     the site.
+     ========================================================================= -->
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home | NASA RAVEN Aerodynamics Project</title>
+  <meta name="description" content="Aerodynamics of the NASA RAVEN — an ASE Senior Capstone project at Mississippi State University." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- Site header (site title + "Options" navigation menu) is injected here by js/main.js -->
+  <header id="site-header"></header>
+
+  <!-- ==========================================================================
+       HERO SECTION — Slide 1 content (title slide)
+       ========================================================================== -->
+  <section class="hero">
+    <div class="container text-center">
+
+      <!--
+        ============================================================
+        IMAGE PLACEHOLDER — RAVEN / TEAM LOGO
+        ============================================================
+        Slide 1 of the presentation shows the RAVEN program logo in the
+        top-right corner. To add it here:
+          1. Save the logo image into the "images" folder,
+             e.g. images/raven-logo.png (a PNG with a transparent
+             background works best on this dark maroon banner).
+          2. Delete the <div class="figure-placeholder"> block below.
+          3. Paste this in its place:
+               <img src="images/raven-logo.png" alt="NASA RAVEN program logo"
+                    style="max-width:500px; margin:0 auto 1.5rem;">
+        ============================================================
+      -->
+      <img src="images/raven-logo.webp" alt="NASA RAVEN program logo"
+                    style="max-width:400px; margin:0 auto 1.5rem;">
+                    <p style="font-size:0.75rem; color:rgba(255,255,255,0.65); margin:0 0 1.5rem;">
+  Logo Credit: NASA
+</p>
+
+      <h1>Aerodynamics of the NASA RAVEN</h1>
+      <p class="hero__subtitle">ASE Senior Capstone Project</p>
+      <p class="hero__meta">
+        Noah Walker &middot; Thomas Stafford &middot; 2026-2027<br />
+        Department of Aerospace Engineering - Mississippi State University, Bagley College of Engineering
+      </p>
+
+      <div class="btn-row" style="justify-content: center;">
+        <a class="btn btn--outline-light" href="raven.html">Learn About the RAVEN</a>
+        <a class="btn btn--accent" href="project.html">More About the Project</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       PROBLEM STATEMENT — Slide 2 content
+       ========================================================================== -->
+  <section class="section content">
+    <div class="container">
+      <h2>Project Problem Statement</h2>
+
+      <!--
+        EDITING THIS LIST: each <li> below is one bullet point from the
+        "Proposed Problem Statement" slide. Add, remove, or edit <li>
+        lines freely — the surrounding <ul> and <section> structure can
+        stay the same.
+      -->
+      <ul>
+        <li>As cities grow, so does the requirement for urban air mobility vehicles.</li>
+        <li>Electric vertical take off and landing vehicles (eVTOLs) are becoming more prominent, with several existing models used for development.</li>
+        <li>Before actual use, it is important to understand how these vehicles operate in order to maximize safety and efficiency while minimizing noise.</li>
+        <li>The NASA Research Aircraft for eVTOL Enabling techNologies (RAVEN) exists for use in research and development.</li>
+        <li>There is seemingly little aerodynamic data on this vehicle or similar platforms.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       MAIN NAVIGATION BUTTONS — the two primary "hub" pages
+       ========================================================================== -->
+  <section class="section section--alt">
+    <div class="container">
+      <h2 class="text-center" style="display:block; border-bottom:none;">Explore the Project</h2>
+      <div class="hub-grid">
+
+        <a class="hub-card" href="raven.html">
+          <h2>Learn About the RAVEN</h2>
+          <p>Background on the NASA RAVEN aircraft: what it is, why it exists, and the research challenges it was built to address.</p>
+          <span class="hub-card__cta">View the RAVEN page &rarr;</span>
+        </a>
+
+        <a class="hub-card" href="project.html">
+          <h2>More About the Project</h2>
+          <p>Objectives, advisors, and project timeline - plus links to the research approach, findings, future work, and sources.</p>
+          <span class="hub-card__cta">View the Project page &rarr;</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Site footer is injected here by js/main.js -->
+  <footer id="site-footer"></footer>
+
+  <script src="js/main.js"></script>
+</body>
+</html>
